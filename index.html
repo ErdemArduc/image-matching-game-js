@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    body {
+        margin: 0px;
+        padding: 0px;
+        background-color: skyblue;
+    }
+
+    .outer {
+        width: 650px;
+        height: 650px;
+        background-color: black;
+        padding: 0px;
+        margin: 50px 34px;
+        float: left;
+        color: white;
+        display: none;
+    }
+
+    .inner {
+        background-color: red;
+        float: left;
+        width: 150px;
+        height: 150px;
+        margin-left: 10px;
+        margin-top: 10px;
+
+    }
+
+    #point {
+        width: 400px;
+        height: 650px;
+        background-color: wheat;
+        padding: 0px;
+        float: left;
+        margin-top: 50px;
+        color: black;
+        text-align: center;
+        font-size: 50px;
+        display: none;
+    }
+
+    #time {
+        width: 400px;
+        height: 650px;
+        background-color: gold;
+        padding: 0px;
+        float: right;
+        margin-top: 50px;
+        color: black;
+        text-align: center;
+        font-size: 50px;
+        display: none;
+    }
+
+    #point #innerpoint {
+        font-size: 100px;
+    }
+
+    #time #timing {
+        font-size: 100px;
+    }
+
+    #play {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-color: darkslateblue;
+        color: white;
+        text-align: center;
+    }
+
+    #play ul {
+        padding-top: 50px;
+        margin-left: 20%;
+        margin-right: 20%;
+    }
+
+    #play ul li {
+        display: block;
+        height: 25px;
+        background-color: burlywood;
+        font-size: 20px;
+        margin: 10px;
+        color: black;
+        border-radius: 15px;
+        transition: 800ms;
+        padding: auto;
+    }
+
+    #play button {
+        width: 300px;
+        height: 45px;
+        display: inline-block;
+        border-radius: 15px;
+        font-size: 35px;
+        color: white;
+        transition: 800ms;
+        border: 1px solid darkslateblue;
+        box-shadow: 5px 10px 18px #888888;
+        background-color: blue;
+    }
+
+    #play button:hover {
+        background-color: white;
+        color: blue;
+        cursor: pointer;
+        border-radius: 8px;
+    }
+
+    #play li:hover {
+        height: 35px;
+        font-size: 25px;
+        border-radius: 8px;
+    }
+
+    #endScreen {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-color: darkslateblue;
+        color: white;
+        text-align: center;
+        display: none;
+    }
+
+    .endButton {
+        width: 300px;
+        height: 45px;
+        display: inline-block;
+        border-radius: 15px;
+        font-size: 35px;
+        color: white;
+        transition: 800ms;
+        border: 1px solid darkslateblue;
+        box-shadow: 5px 10px 18px #888888;
+        background-color: blue;
+    }
+
+    .endButton:hover {
+        background-color: white;
+        color: blue;
+        cursor: pointer;
+        border-radius: 8px;
+    }
+</style>
+
+<body>
+    <div id="point">
+        <p id="text0"></p>
+        <p id="innerpoint"></p>
+    </div>
+    <div id="time">
+        <p id="text1"></p>
+        <p id="timing"></p>
+    </div>
+    <div id="outer" class="outer"></div>
+    <div id="play">
+        <ul>
+            <li>Please read all information about game before starting.</li>
+            <li>There is 8 different images that you should match.</li>
+            <li>You will earn points if you match same images according to time.</li>
+            <li>If time that you match is less than 15, 10 points will be given.</li>
+            <li>If time is between 15 and 30, you will earn 9 points.</li>
+            <li>If time is between 30 and 45, you will earn 8 points. </li>
+            <li>If time is between 45 and 60, you will earn 7 points. </li>
+            <li>If time is between 60 and 75, you will earn 6 points. </li>
+            <li>If time is between 75 and 90, you will earn 5 points. </li>
+            <li>If time is between 90 and 105, you will earn 4 points. </li>
+            <li>If time is between 105 and 120, you will earn 3 points. </li>
+            <li>If time is between 120 and 135, you will earn 2 points. </li>
+            <li>If time that you match is greater than 135, 1 points will be given.</li>
+            <li>Game will start when you click the button.</li>
+            <li>Now you can click the button.</li>
+        </ul>
+        <button onclick="startGame()">Play Game</button>
+    </div>
+    <div id="endScreen">
+        Your Point <span id="pointSpan"></span><br>
+        Time You Finished <span id="timeSpan"></span><br>
+        <button onclick="startGame()" class="endButton">Restart Game</button>
+    </div>
+
+
+
+
+    <script>
+        //Main Part
+        let images = ["https://i.pinimg.com/564x/07/64/74/07647447858c06df2d8065c409829451.jpg", "https://i.pinimg.com/564x/ae/8f/0c/ae8f0c72d55d71244ead5bfb2af45733.jpg", "https://i.pinimg.com/564x/2c/9d/f8/2c9df808f4e7a6b16c44d78acbb3453f.jpg", "https://i.pinimg.com/564x/75/2f/f2/752ff251ac31386051b3a580641a64db.jpg", "https://i.pinimg.com/564x/ac/cd/9e/accd9eaa82bbf6e04b8831d0161f472c.jpg", "https://i.pinimg.com/564x/6b/8f/ae/6b8fae984bd1b34531f2d0dc79e6ad97.jpg", "https://i.picsum.photos/id/175/200/200.jpg?hmac=5rzD884Hqi9oWr_n5vg0XSc9f6yMlPotvKa8Y0cVzd4", "https://i.picsum.photos/id/30/200/200.jpg?hmac=X-W4F5N4VB42ovwIE4pQzUf-O6pqi2hXB637_jp7rWQ"]
+        let operations = []
+        let point = 0
+        let second = 0
+        let isWorking = false
+        let playDiv = document.getElementById("play")
+        let pointDiv = document.getElementById("point")
+        let timeDiv = document.getElementById("time")
+        let outerDiv = document.getElementById("outer")
+        let spanTime = document.getElementById("timeSpan")
+        let spanPoint = document.getElementById("pointSpan")
+        let endScreenDiv = document.getElementById("endScreen")
+        let nodes;
+        let intervalId;
+
+        //Function Part
+        function doubleList(list) {
+            let listToDouble = []
+            for (const item of list) {
+                listToDouble.push(item)
+                listToDouble.push(item)
+            }
+            return listToDouble
+        }
+
+        function randomizeArray(list) {
+            let gridData = []
+            let lengthOfList = list.length
+            for (var i = 0; i < lengthOfList; i++) {
+                let random = Math.floor(Math.random() * list.length)
+                gridData.push(list[random])
+                list.splice(random, 1)
+            }
+            return gridData
+        }
+
+        function checkBackground(div) {
+            return div.style.backgroundImage == "";
+        }
+
+        function match(node) {
+            operations.push(node)
+            if (operations.length == 2) {
+                if (operations[0].style.backgroundImage == operations[1].style.backgroundImage) {
+                    if (second <= 15) {
+                        point = point + 10
+                    }
+                    else if (second > 15 && second <= 30) {
+                        point = point + 9
+                    }
+                    else if (second > 30 && second <= 45) {
+                        point = point + 8
+                    }
+                    else if (second > 45 && second <= 60) {
+                        point = point + 7
+                    }
+                    else if (second > 60 && second <= 75) {
+                        point = point + 6
+                    }
+                    else if (second > 75 && second <= 90) {
+                        point = point + 5
+                    }
+                    else if (second > 90 && second <= 105) {
+                        point = point + 4
+                    }
+                    else if (second > 105 && second <= 120) {
+                        point = point + 3
+                    }
+                    else if (second > 120 && second <= 135) {
+                        point = point + 2
+                    }
+                    else {
+                        point = point + 1
+                    }
+                    document.getElementById("innerpoint").innerHTML = point
+                    operations = []
+                }
+                else {
+                    isWorking = true
+                    setTimeout(() => {
+                        operations[0].style.backgroundImage = null
+                        operations[1].style.backgroundImage = null
+                        operations = []
+                        isWorking = false
+                    }, 1000);
+                }
+            }
+        }
+
+        function timing() {
+            intervalId = setInterval(() => {
+                document.getElementById("timing").innerHTML = minute(second)
+                second++
+            }, 1000);
+        }
+
+        function minute(second) {
+            let minute = Math.floor(second / 60)
+            let second0 = second % 60
+            let strminute = minute.toString().padStart(2, '0')
+            let strsecond0 = second0.toString().padStart(2, '0')
+            return strminute + ":" + strsecond0
+        }
+
+        function createDiv(url) {
+            let node = document.createElement("div");
+            node.classList.add("inner")
+            node.style.backgroundSize = "cover"
+            document.getElementById("outer").appendChild(node);
+            node.style.backgroundImage = `url("${url}")`
+            node.onclick = function (event) {
+                if (!node.style.backgroundImage && !isWorking) {
+                    event.target.style.backgroundImage = `url("${url}")`
+                    match(node)
+                }
+                let nullNodes = nodes.filter(checkBackground);
+                console.log(nullNodes)
+                if ((nullNodes.length == 0 && second > 0)) {
+                    endPart()
+                }
+            }
+            document.getElementById("text0").innerHTML = "YOUR POINT"
+            document.getElementById("innerpoint").innerHTML = point
+            document.getElementById("text1").innerHTML = "TIME"
+            return node;
+        }
+
+        function startGame() {
+            point = 0
+            second = 0
+            timing()
+            document.getElementById("timing").innerHTML = minute(second)
+            document.getElementById("innerpoint").innerHTML = point
+            playDiv.style.display = "none"
+            pointDiv.style.display = "block"
+            outerDiv.style.display = "block"
+            timeDiv.style.display = "block"
+            endScreenDiv.style.display = "none"
+            clearNodes()
+            let result = randomizeArray(doubleList(images))
+            nodes = result.map(createDiv)
+            setTimeout(() => {
+                nodes.forEach((node) => {
+                    node.style.backgroundImage = null
+                })
+            }, 750);
+            
+        }
+
+        function clearNodes() {
+            document.getElementById("outer").innerHTML = ""
+        }
+
+        function endPart() {
+            endScreenDiv.style.display = "block"
+            pointDiv.style.display = "none"
+            outerDiv.style.display = "none"
+            timeDiv.style.display = "none"
+            spanPoint.innerHTML = point
+            spanTime.innerHTML = minute(second)
+            clearInterval(intervalId)
+        }
+        //StartGame hep aynı randomu yapıyor
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </script>
+</body>
+
+</html>
