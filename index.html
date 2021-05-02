@@ -2,6 +2,8 @@
 <html lang="en">
 
 <head>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Krona+One&family=Zen+Dots&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,7 +13,7 @@
     body {
         margin: 0px;
         padding: 0px;
-        background-color: skyblue;
+        background-color: #77acf1;
     }
 
     .outer {
@@ -22,11 +24,10 @@
         margin: 50px 34px;
         float: left;
         color: white;
-        display: none;
     }
 
     .inner {
-        background-color: red;
+        background-color: #04009a;
         float: left;
         width: 150px;
         height: 150px;
@@ -35,45 +36,41 @@
 
     }
 
-    #point {
+    .information-text {
+        display: flex;
+        justify-content: center;
+        align-items: center;
         width: 400px;
         height: 650px;
-        background-color: wheat;
+        background-color: #c0fefc;
         padding: 0px;
-        float: left;
         margin-top: 50px;
         color: black;
-        text-align: center;
+        flex-direction: column;
         font-size: 50px;
-        display: none;
+        font-family: 'Krona One', sans-serif;
+
+    }
+
+    #point {
+        float: left;
+        text-align: center;
     }
 
     #time {
-        width: 400px;
-        height: 650px;
-        background-color: gold;
-        padding: 0px;
         float: right;
-        margin-top: 50px;
-        color: black;
-        text-align: center;
-        font-size: 50px;
-        display: none;
     }
 
-    #point #innerpoint {
-        font-size: 100px;
-    }
-
-    #time #timing {
-        font-size: 100px;
-    }
 
     #play {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
         position: absolute;
         width: 100%;
         height: 100%;
-        background-color: darkslateblue;
+        background-color: #77acf1;
         color: white;
         text-align: center;
     }
@@ -97,23 +94,35 @@
     }
 
     #play button {
-        width: 300px;
-        height: 45px;
+        padding: 20px;
         display: inline-block;
-        border-radius: 15px;
-        font-size: 35px;
+        font-family: 'Krona One', sans-serif;
+        font-size: 25px;
         color: white;
         transition: 800ms;
-        border: 1px solid darkslateblue;
-        box-shadow: 5px 10px 18px #888888;
-        background-color: blue;
+        border: 5px solid white;
+        background-color: #04009a;
     }
 
     #play button:hover {
-        background-color: white;
-        color: blue;
+        transform: translateY(-30px);
+        box-shadow: 0px 30px 20px 0px rgba(104, 108, 176, 1);
         cursor: pointer;
-        border-radius: 8px;
+    }
+
+    .credit {
+        padding: 10px;
+
+    }
+
+    .spacer {
+        flex-grow: 1;
+    }
+
+    .name {
+        margin: 50px;
+        font-family: 'Zen Dots', cursive;
+        font-size: 35px;
     }
 
     #play li:hover {
@@ -121,67 +130,72 @@
         font-size: 25px;
         border-radius: 8px;
     }
-
-    #endScreen {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        background-color: darkslateblue;
-        color: white;
-        text-align: center;
+    .midgame{
         display: none;
     }
 
+    #endScreen {
+        font-family: 'Krona One', sans-serif;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        color: white;
+        flex-direction: column;   
+        display: none;
+        justify-content: center;
+        align-items: center;
+    }
+
     .endButton {
-        width: 300px;
-        height: 45px;
+        margin-top: 50px;
+        padding: 20px;
         display: inline-block;
-        border-radius: 15px;
-        font-size: 35px;
+        font-family: 'Krona One', sans-serif;
+        font-size: 25px;
         color: white;
         transition: 800ms;
-        border: 1px solid darkslateblue;
-        box-shadow: 5px 10px 18px #888888;
-        background-color: blue;
+        border: 5px solid white;
+        background-color: #04009a;
     }
 
     .endButton:hover {
-        background-color: white;
-        color: blue;
+        transform: translateY(-30px);
+        box-shadow: 0px 30px 20px 0px rgba(104, 108, 176, 1);
         cursor: pointer;
-        border-radius: 8px;
     }
 </style>
 
 <body>
-    <div id="point">
-        <p id="text0"></p>
-        <p id="innerpoint"></p>
+    <div id="midgame" class="midgame    ">
+        <div id="point" class="information-text">
+            <p id="text0"></p>
+            <span class="spacer"></span>
+            <p id="innerpoint"></p>
+            <span class="spacer"></span>
+        </div>
+        <div id="time" class="information-text">
+
+            <p id="text1"></p>
+            <span class="spacer"></span>
+            <p id="timing"></p>
+            <span class="spacer"></span>
+        </div>
+        <div id="outer" class="outer"></div>
     </div>
-    <div id="time">
-        <p id="text1"></p>
-        <p id="timing"></p>
-    </div>
-    <div id="outer" class="outer"></div>
     <div id="play">
-        <ul>
+
+        <!-- <ul>
             <li>Please read all information about game before starting.</li>
             <li>There is 8 different images that you should match.</li>
             <li>You will earn points if you match same images according to time.</li>
-            <li>If time that you match is less than 15, 10 points will be given.</li>
-            <li>If time is between 15 and 30, you will earn 9 points.</li>
-            <li>If time is between 30 and 45, you will earn 8 points. </li>
-            <li>If time is between 45 and 60, you will earn 7 points. </li>
-            <li>If time is between 60 and 75, you will earn 6 points. </li>
-            <li>If time is between 75 and 90, you will earn 5 points. </li>
-            <li>If time is between 90 and 105, you will earn 4 points. </li>
-            <li>If time is between 105 and 120, you will earn 3 points. </li>
-            <li>If time is between 120 and 135, you will earn 2 points. </li>
-            <li>If time that you match is greater than 135, 1 points will be given.</li>
             <li>Game will start when you click the button.</li>
             <li>Now you can click the button.</li>
-        </ul>
+        </ul> -->
+        <span class="spacer"></span>
+        <span class="name">Image Matching Game</span>
         <button onclick="startGame()">Play Game</button>
+        <span class="spacer"></span>
+        <span class="credit">Made by Resul Erdem Arduç with Love</span>
     </div>
     <div id="endScreen">
         Your Point <span id="pointSpan"></span><br>
@@ -206,6 +220,7 @@
         let spanTime = document.getElementById("timeSpan")
         let spanPoint = document.getElementById("pointSpan")
         let endScreenDiv = document.getElementById("endScreen")
+        let midgameDiv = document.getElementById("midgame")
         let nodes;
         let intervalId;
 
@@ -328,9 +343,8 @@
             document.getElementById("timing").innerHTML = minute(second)
             document.getElementById("innerpoint").innerHTML = point
             playDiv.style.display = "none"
-            pointDiv.style.display = "block"
             outerDiv.style.display = "block"
-            timeDiv.style.display = "block"
+            midgameDiv.style.display = "block"
             endScreenDiv.style.display = "none"
             clearNodes()
             let result = randomizeArray(doubleList(images))
@@ -340,7 +354,7 @@
                     node.style.backgroundImage = null
                 })
             }, 750);
-            
+
         }
 
         function clearNodes() {
@@ -348,10 +362,8 @@
         }
 
         function endPart() {
-            endScreenDiv.style.display = "block"
-            pointDiv.style.display = "none"
-            outerDiv.style.display = "none"
-            timeDiv.style.display = "none"
+            endScreenDiv.style.display = "flex"
+            midgameDiv.style.display = "none"
             spanPoint.innerHTML = point
             spanTime.innerHTML = minute(second)
             clearInterval(intervalId)
